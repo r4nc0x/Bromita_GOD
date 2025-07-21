@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <title>💀 HACK EN PROGRESO</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 1.1rem;
+      overflow: hidden;
+      user-select: none;
+      touch-action: none;
+    }
+
+    .terminal {
+      padding: 20px;
+      white-space: pre-line;
+      height: 100vh;
+      overflow-y: hidden;
+      box-sizing: border-box;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background-color: #111;
+      border: 1px solid #0f0;
+      height: 14px;
+      margin-top: 5px;
+    }
+
+    .progress {
+      background-color: #0f0;
+      height: 100%;
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    .final-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000;
+      color: red;
+      font-size: 1.8rem;
+      z-index: 9999;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 25px;
+    }
+
+    .final-screen strong {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: #ff4444;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false" onkeydown="return false" onmousedown="return false">
+  <div class="terminal" id="terminal">
+    Iniciando conexión...
+  </div>
+
+  <div class="final-screen" id="finalScreen">
+    <strong>🔓 ACCESO VULNERADO</strong>
+    Tu dispositivo ha sido incorporado a nuestra red.<br><br>
+    Conectando a botnet global...<br>
+    <span id="dots">⠋</span><br><br>
+    🔥 El control total ha sido transferido.<br>
+    🧠 Tu sistema ya no te pertenece.
+  </div>
+
+  <audio id="alertSound" src="https://www.soundjay.com/button/beep-07.mp3" preload="auto"></audio>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+    const finalScreen = document.getElementById("finalScreen");
+    const alertSound = document.getElementById("alertSound");
+
+    const logs = [
+      "Estableciendo túnel de inyección...",
+      "Bypasseando antivirus...",
+      "Acceso root concedido ✔",
+      "Clonando chats de WhatsApp 📲",
+      "Recuperando contraseñas del sistema 🔐",
+      "Accediendo a cámara y micrófono...",
+      "Transfiriendo datos sensibles a servidor oculto...",
+      "Espejeando pantalla en vivo 🎥",
+      "Conectando a red de dispositivos comprometidos...",
+      "✔ Acceso total logrado"
+    ];
+
+    let index = 0;
+
+    function beep() {
+      alertSound.currentTime = 0;
+      alertSound.play();
+      if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
+    }
+
+    function logNext() {
+      if (index >= logs.length) {
+        setTimeout(() => {
+          finalScreen.style.display = "flex";
+          beep();
+          setInterval(beep, 1500);
+          animateDots();
+        }, 1000);
+        return;
+      }
+
+      const line = document.createElement("div");
+      line.textContent = logs[index];
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+      beep();
+
+      const bar = document.createElement("div");
+      bar.className = "progress-bar";
+
+      const fill = document.createElement("div");
+      fill.className = "progress";
+      bar.appendChild(fill);
+      terminal.appendChild(bar);
+
+      let val = 0;
+      const prog = setInterval(() => {
+        val += Math.random() * 40;
+        if (val >= 100) {
+          fill.style.width = "100%";
+          clearInterval(prog);
+          index++;
+          setTimeout(logNext, 250); // muy rápido
+        } else {
+          fill.style.width = val + "%";
+        }
+      }, 80);
+    }
+
+    // Prevent back button on mobile
+    history.pushState(null, null, location.href);
+    window.onpopstate = () => history.pushState(null, null, location.href);
+
+    // Try fullscreen
+    document.documentElement.requestFullscreen?.();
+
+    // Start the drama
+    setTimeout(() => {
+      terminal.innerHTML = "";
+      logNext();
+    }, 1000);
+
+    // Dot animation
+    function animateDots() {
+      const dots = document.getElementById("dots");
+      const frames = ['⠋','⠙','⠹','⠸','⠼','⠴','⠦','⠧','⠇','⠏'];
+      let i = 0;
+      setInterval(() => {
+        dots.textContent = frames[i % frames.length];
+        i++;
+      }, 100);
+    }
+  </script>
+</body>
+</html>
